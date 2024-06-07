@@ -91,6 +91,9 @@ public class TransactionService {
             int fine=(int)(noOfDays-10)*10;
             transaction.setFineAmt(fine);
         }
+        else{
+            transaction.setFineAmt(0);
+        }
 
         transaction.setTransactionStatus(TransactionStatus.SUCCESS);
         //save Transaction Details to DB
