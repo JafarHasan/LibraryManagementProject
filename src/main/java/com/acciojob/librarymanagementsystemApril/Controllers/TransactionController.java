@@ -2,12 +2,16 @@ package com.acciojob.librarymanagementsystemApril.Controllers;
 
 import com.acciojob.librarymanagementsystemApril.Services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 @RestController
 @RequestMapping("transactions")
@@ -29,9 +33,10 @@ public class TransactionController {
     }
 
     @PutMapping("returnBook")
-    public ResponseEntity returnBook(@RequestParam("bookId")Integer bookId){
+    public ResponseEntity returnBook(@RequestParam("bookId")Integer bookId,
+                                     @RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date){
         try{
-            String result=transactionService.returnBook(bookId);
+            String result=transactionService.returnBook(bookId,date);
             return new ResponseEntity(result,HttpStatus.OK);
         }
         catch (Exception e){

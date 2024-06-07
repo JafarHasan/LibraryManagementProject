@@ -67,7 +67,7 @@ public class TransactionService {
 
     }
 
-    public String returnBook(int bookId){
+    public String returnBook(int bookId,Date date){
         //get book Entity from Book
         Book book=bookRepository.findById(bookId).get();
 
@@ -80,21 +80,13 @@ public class TransactionService {
         //save updated book to db
         book=bookRepository.save(book);
 
-        // Set the return date
-        DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-        Date returnDate = null;
-        try {
-            returnDate = dateFormat.parse("20-MAY-2024 12:20:30");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        transaction.setReturnDate(returnDate);
+        transaction.setReturnDate(date);
 
         //getting issued date
         Date issueDate=transaction.getIssueDate();
-        long noOfDays = calculateDaysDifference(issueDate, returnDate);
+        long noOfDays = calculateDaysDifference(issueDate, date);
 
-        //15 days is allowed after this 10rs perday fine
+        //10 days is allowed after this 10rs perday fine
         if(noOfDays>10){
             int fine=(int)(noOfDays-10)*10;
             transaction.setFineAmt(fine);
