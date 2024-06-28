@@ -30,4 +30,9 @@ public class AuthorController {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
+    @GetMapping("/authorWithMaxNoOfBooks")
+    public ResponseEntity<String> authorWithMaxNoOfBooks(){
+        String name=authorService.AuthorWithMaxBook();
+        return new ResponseEntity<>(name,HttpStatus.OK);
+    }
 }
