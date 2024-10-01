@@ -8,6 +8,8 @@ import com.acciojob.librarymanagementsystemApril.Repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 @Service
 public class BookService {
@@ -45,5 +47,22 @@ public class BookService {
         authorRepository.save(author);
 
         return "Book and Author have been associated";
+    }
+    public List<String> getAllAvailableBooks() throws Exception{
+        List<Book> bookList=bookRepository.findAll();
+        List<String> ansList=new ArrayList<>();
+        if(bookList.isEmpty()){
+            throw new Exception("empty database!...");
+        }
+        else{
+            for(Book b:bookList){
+                ansList.add(b.getBookName());
+            }
+        }
+        return ansList;
+    }
+    public String getBookNameWithHighestNoOfPages(){
+        Book book=bookRepository.getHighestNoOfPagesBook();
+        return book.getBookName();
     }
 }
